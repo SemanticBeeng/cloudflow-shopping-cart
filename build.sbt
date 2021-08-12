@@ -1,9 +1,9 @@
 import sbt._
 import sbt.Keys._
 
-val AkkaVersion = "2.6.8"
+val AkkaVersion = "2.6.15"
 val AkkaPersistenceCassandraVersion = "1.0.0"
-val AkkaHttpVersion = "10.1.10"
+val AkkaHttpVersion = "10.2.6"
 val AkkaProjectionVersion = "0.3"
 
 lazy val root =
@@ -34,6 +34,9 @@ lazy val cloudflowShoppingCart = (project in file("./shopping-cart"))
 
 lazy val datamodel = (project in file("./datamodel"))
   .enablePlugins(CloudflowLibraryPlugin)
+  .settings(
+    commonSettings
+	)
 
 lazy val akkaShoppingCartStreamlet = (project in file("./akka-shopping-cart-streamlet"))
   .enablePlugins(CloudflowAkkaPlugin)
@@ -85,6 +88,7 @@ lazy val akkaShoppingCart = (project in file("./akka-shopping-cart"))
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.11",
+  evictionErrorLevel := Level.Info,
   scalacOptions ++= Seq(
     "-encoding", "UTF-8",
     "-target:jvm-1.8",
